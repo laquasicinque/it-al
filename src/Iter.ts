@@ -225,8 +225,8 @@ export class Iter<T> implements Iterable<T> {
     return join(this.#value, delimiter);
   }
 
-  groupBy<U>(fn: IterFn<T, U>) {
-    return groupBy(this.#value, fn);
+  groupBy<U>(fnOrKey: IterFn<T, U> | keyof T) {
+    return groupBy(this.#value, fnOrKey);
   }
 
   groupByIter<U>(fn: IterFn<T, U>) {
