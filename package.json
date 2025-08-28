@@ -1,6 +1,6 @@
 {
   "name": "it-al",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -12,7 +12,7 @@
     ".": {
       "import": "./dist/it-al.js",
       "require": "./dist/it-al.cjs",
-      "types": "./dist/it-al.d.ts"
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
