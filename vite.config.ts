@@ -17,8 +17,8 @@ export default defineConfig({
         fileURLToPath(new URL(".", import.meta.url)),
         "src/index.ts"
       ),
-      name: "Iter",
-      fileName: "iter",
+      name: "it-al",
+      fileName: "it-al",
       formats: ["es", "cjs", "umd"],
     },
     rollupOptions: {

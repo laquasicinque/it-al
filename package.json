@@ -1,6 +1,6 @@
 {
   "name": "it-al",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -10,9 +10,9 @@
   "types": "dist/iter.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/iter.js",
-      "require": "./dist/iter.cjs",
-      "types": "./dist/iter.d.ts"
+      "import": "./dist/it-al.js",
+      "require": "./dist/it-al.cjs",
+      "types": "./dist/it-al.d.ts"
     }
   },
   "files": [
