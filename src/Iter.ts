@@ -13,6 +13,7 @@ import { gen } from "./gen";
 import { includes } from "./includes";
 import { isEmpty } from "./isEmpty";
 import { join } from "./join";
+import { groupBy } from "./groupBy";
 import { last } from "./last";
 import { map } from "./map";
 import { partition } from "./partition";
@@ -222,6 +223,14 @@ export class Iter<T> implements Iterable<T> {
 
   join(delimiter = ",") {
     return join(this.#value, delimiter);
+  }
+
+  groupBy<U>(fn: IterFn<T, U>) {
+    return groupBy(this.#value, fn);
+  }
+
+  groupByIter<U>(fn: IterFn<T, U>) {
+    return new Iter(groupBy(this.#value, fn));
   }
 
   // Mathematical operations
