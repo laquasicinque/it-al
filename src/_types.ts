@@ -2,6 +2,8 @@ export type Prettify<T> = {
   [K in keyof T]: T[K];
 } & {};
 
+export type MaybePromise<T> = T | Promise<T>;
+
 export type IterFn<T, U = unknown> = (iter: T, index: number) => U;
 
 export type CurriedFn<T, U> = (iter: Iterable<T>) => U;

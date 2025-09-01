@@ -37,7 +37,8 @@ import { until } from "./until";
 import { unzip, type UnzipOutput } from "./unzip";
 import { windows } from "./windows";
 import { zip } from "./zip";
-import type { IterFn } from "./_types";
+import type { IterFn, MaybePromise } from "./_types";
+import { isAsyncIterable } from "./isAsyncIterable";
 
 const _collectAsArray = <T>([...x]: Iterable<T>): T[] => x;
 
@@ -50,6 +51,19 @@ export class Iter<T> implements Iterable<T> {
 
   static from<T>(iterable: Iterable<T>) {
     return new Iter<T>(iterable);
+  }
+
+  static async fromAsync<T>(
+    iterable: Iterable<MaybePromise<T>> | AsyncIterable<T>
+  ): Promise<Iter<Awaited<T>>> {
+    if (isAsyncIterable(iterable)) {
+      const arr: Awaited<T>[] = [];
+      for await (const item of iterable) {
+        arr.push(item);
+      }
+      return new Iter(arr);
+    }
+    return new Iter(await Promise.all(iterable));
   }
 
   static fromEntries(obj: Partial<Record<PropertyKey, unknown>>) {
