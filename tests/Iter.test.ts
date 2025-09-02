@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { Iter } from "../src/Iter";
+import { Iter } from "../src";
 
 describe("Iter", () => {
   describe("constructor", () => {
@@ -55,7 +55,9 @@ describe("Iter", () => {
 
     describe("filter", () => {
       it("filters values", () => {
-        const result = new Iter([1, 2, 3, 4]).filter(x => x % 2 === 0).toArray();
+        const result = new Iter([1, 2, 3, 4])
+          .filter(x => x % 2 === 0)
+          .toArray();
         expect(result).toEqual([2, 4]);
       });
     });
@@ -85,7 +87,9 @@ describe("Iter", () => {
           { name: "Bob", age: 30 },
           { name: "Alice", age: 26 },
         ];
-        const result = new Iter(people).uniqueBy(person => person.name).toArray();
+        const result = new Iter(people)
+          .uniqueBy(person => person.name)
+          .toArray();
         expect(result).toHaveLength(2);
         expect(result.map(p => p.name)).toEqual(["Alice", "Bob"]);
       });
@@ -103,10 +107,10 @@ describe("Iter", () => {
     describe("groupByIter", () => {
       it("returns Iter instance with grouped results", () => {
         const result = new Iter([1, 2, 3, 4, 5, 6]).groupByIter(x => x % 2);
-        
+
         // Check that result is an Iter instance
         expect(result).toBeInstanceOf(Iter);
-        
+
         // Convert to Map to test the grouped results
         const resultMap = new Map(result.toArray());
         expect(resultMap.get(1)).toEqual([1, 3, 5]);
@@ -160,14 +164,18 @@ describe("Iter", () => {
 
     describe("takeWhile", () => {
       it("takes while condition is true", () => {
-        const result = new Iter([1, 2, 3, 4, 5]).takeWhile(x => x < 4).toArray();
+        const result = new Iter([1, 2, 3, 4, 5])
+          .takeWhile(x => x < 4)
+          .toArray();
         expect(result).toEqual([1, 2, 3]);
       });
     });
 
     describe("skipWhile", () => {
       it("skips while condition is true", () => {
-        const result = new Iter([1, 2, 3, 4, 5]).skipWhile(x => x < 3).toArray();
+        const result = new Iter([1, 2, 3, 4, 5])
+          .skipWhile(x => x < 3)
+          .toArray();
         expect(result).toEqual([3, 4, 5]);
       });
     });
@@ -306,7 +314,7 @@ describe("Iter", () => {
       const iter = new Iter([1, 2, 3, 4, 5]);
 
       // Should be iterable
-      const manual = [];
+      const manual: number[] = [];
       for (const item of iter) {
         manual.push(item);
       }

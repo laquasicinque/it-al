@@ -39,6 +39,7 @@ import { windows } from "./windows";
 import { zip } from "./zip";
 import type { IterFn, MaybePromise } from "./_types";
 import { isAsyncIterable } from "./isAsyncIterable";
+import { PeekableIter } from "./PeekableIter";
 
 const _collectAsArray = <T>([...x]: Iterable<T>): T[] => x;
 
@@ -247,6 +248,10 @@ export class Iter<T> implements Iterable<T> {
     return new Iter(groupBy(this.#value, fn));
   }
 
+  peekable() {
+    return new PeekableIter(this.#value);
+  }
+
   // Mathematical operations
 
   sum<Output = [T] extends [number] ? number : never>(): Output {
@@ -287,6 +292,16 @@ export class Iter<T> implements Iterable<T> {
 
   toArray() {
     return this.collect();
+  }
+
+  toSet() {
+    return this.collect(x => new Set(x));
+  }
+
+  toMap(): T extends [infer A, infer B] ? Map<A, B> : never {
+    return this.collect(
+      x => new Map(x as Iterable<[unknown, unknown]>)
+    ) as T extends [infer A, infer B] ? Map<A, B> : never;
   }
 
   [Symbol.iterator](): Iterator<T> {

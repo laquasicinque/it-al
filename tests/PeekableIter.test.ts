@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { PeekableIter } from "../src/PeekableIter";
+import { PeekableIter } from "../src";
 
 describe("PeekableIter", () => {
   it("should extend Iter functionality with peek", () => {
