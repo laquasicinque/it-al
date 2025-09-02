@@ -1,4 +1,4 @@
-import type { MaybePromise } from "./_types";
+import type { MaybePromise, PeekableIter } from "./_types";
 import { gen } from "./gen";
 import { isAsyncIterable } from "./isAsyncIterable";
 import { Iter } from "./Iter";
@@ -7,7 +7,9 @@ import { range } from "./range";
 import { search, type KeyValuePair } from "./search";
 import { zip } from "./zip";
 
-export const peekableIterMixin = (BaseIter: typeof Iter<unknown>) => {
+export const peekableIterMixin = (
+  BaseIter: typeof Iter<unknown>
+): typeof PeekableIter => {
   /**
    *  PeekableIter is identical to an iterable but allows for the peek
    *  method. However, because of this, it's a little bit less efficient

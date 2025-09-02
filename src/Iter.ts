@@ -39,7 +39,7 @@ import { windows } from "./windows";
 import { zip } from "./zip";
 import type { IterFn, MaybePromise } from "./_types";
 import { isAsyncIterable } from "./isAsyncIterable";
-import { PeekableIter } from "./PeekableIter";
+import { PeekableIter } from "./index";
 
 const _collectAsArray = <T>([...x]: Iterable<T>): T[] => x;
 
@@ -48,7 +48,7 @@ const _collectAsArray = <T>([...x]: Iterable<T>): T[] => x;
  * other than collect and toArray
  */
 export class Iter<T> implements Iterable<T> {
-  #value: Iterable<T>;
+  readonly #value: Iterable<T>;
 
   static from<T>(iterable: Iterable<T>) {
     return new Iter<T>(iterable);
@@ -298,10 +298,10 @@ export class Iter<T> implements Iterable<T> {
     return this.collect(x => new Set(x));
   }
 
-  toMap(): T extends [infer A, infer B] ? Map<A, B> : never {
+  toMap(): T extends readonly [infer A, infer B] ? Map<A, B> : never {
     return this.collect(
       x => new Map(x as Iterable<[unknown, unknown]>)
-    ) as T extends [infer A, infer B] ? Map<A, B> : never;
+    ) as T extends readonly [infer A, infer B] ? Map<A, B> : never;
   }
 
   [Symbol.iterator](): Iterator<T> {

@@ -2,7 +2,9 @@ import { every } from "./every";
 import { some } from "./some";
 import type { TupleExcludingFirst, TupleFirst } from "./_types";
 
-type ZipOutput<T extends readonly unknown[]> = Iterable<RecursiveZipOutput<T>>;
+export type ZipOutput<T extends readonly unknown[]> = Iterable<
+  RecursiveZipOutput<T>
+>;
 
 type RecursiveZipOutput<
   Input extends readonly unknown[],
