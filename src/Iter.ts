@@ -37,7 +37,11 @@ import { until } from "./until";
 import { unzip, type UnzipOutput } from "./unzip";
 import { windows } from "./windows";
 import { zip } from "./zip";
-import type { IterFn, MaybePromise } from "./_types";
+import type {
+  IterFn,
+  MaybePromise,
+  PeekableIter as PeekableIterType,
+} from "./_types";
 import { isAsyncIterable } from "./isAsyncIterable";
 import { PeekableIter } from "./index";
 
@@ -248,7 +252,7 @@ export class Iter<T> implements Iterable<T> {
     return new Iter(groupBy(this.#value, fn));
   }
 
-  peekable() {
+  peekable(): PeekableIterType<T> {
     return new PeekableIter(this.#value);
   }
 

@@ -34,8 +34,6 @@ export type TupleExcludingLast<Tuple extends readonly unknown[]> =
 
 /// @ts-expect-error
 export declare class PeekableIter<T> extends Iter<T> {
-  readonly #peekable: Peekable<T>;
-
   constructor(iter: Iterable<T>);
 
   static override from<T>(iterable: Iterable<T>): PeekableIter<T>;

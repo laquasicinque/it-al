@@ -8,7 +8,7 @@ import { search, type KeyValuePair } from "./search";
 import { zip } from "./zip";
 
 export const peekableIterMixin = (
-  BaseIter: typeof Iter<unknown>
+  BaseIter: typeof Iter
 ): typeof PeekableIter => {
   /**
    *  PeekableIter is identical to an iterable but allows for the peek
@@ -16,7 +16,7 @@ export const peekableIterMixin = (
    *  than a regular Iter, and so is separate from it.
    */
   /// @ts-expect-error The typing of search is correct but causes issues
-  return class PeekableIter<T> extends BaseIter {
+  return class PeekableIter<T> extends BaseIter<T> {
     readonly #peekable: Peekable<T>;
 
     constructor(iter: Iterable<T>) {
@@ -79,7 +79,7 @@ export const peekableIterMixin = (
       return this.#peekable.peek();
     }
 
-    override peekable() {
+    peekable() {
       // peekable on a PeakableIter returns itself as there's no benefit in wrapping the value again
       return this;
     }
