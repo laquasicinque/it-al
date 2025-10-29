@@ -264,7 +264,10 @@ export class Iter<T> implements Iterable<T> {
    * ```
    */
   unique() {
-    return new Iter(new Set(this.#value));
+    // while we could just new return new Iter(new Set(this.#value))
+    // that would consume the entire iterable immediately, which would be very
+    // bad for infinite iterables. This does come at the cost of performance though.
+    return this.uniqueBy(x => x);
   }
 
   /**
