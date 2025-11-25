@@ -607,6 +607,11 @@ export class Iter<T> implements Iterable<T> {
   /**
    * Like Array.forEach but for Iter
    * @param fn - A function to run on each item in the Iter
+   * @example
+   * ```ts
+   * const iter = Iter.from([1,2,3,4]).forEach(console.log) // prints 1, 2, 3, 4
+   * iter // undefined
+   * ```
    */
   forEach(fn: (item: T, index: number) => void): void {
     let i = 0;

@@ -140,13 +140,15 @@ Chainable wrapper around iterables providing a fluent API.
 
 | Method | Description | Return Type |
 |--------|-------------|-------------|
-| [`Iter#from(iterable)`](src/Iter.ts#L57) | Create an Iter from any iterable | `Iter<T>` |
-| [`Iter#fromAsync(iterable)`](src/Iter.ts#L61) | Create an Iter from async iterable or promises | `Iter<T>` |
-| [`Iter#fromEntries(obj)`](src/Iter.ts#L74) | Create an Iter from object entries | `Iter<[K, V]>` |
-| [`Iter#fromRange(stop, start?, step?)`](src/Iter.ts#L78) | Create an Iter from a numeric range | `Iter<number>` |
-| [`Iter#gen(fn)`](src/Iter.ts#L82) | Create infinite Iter using generator function | `() => Iter<T>` |
-| [`Iter#zip(...iterables, stopOnMin?)`](src/Iter.ts#L86) | Zip multiple iterables into tuples | `Iter<[...]>` |
-| [`Iter#search(obj, fn, skipAfterYield?)`](src/Iter.ts#L93) | Recursively search object for matching values | `Iter<KeyValuePair<U>>` |
+| [`Iter#from(iterable)`](src/Iter.ts#L77) | Create an Iter from any iterable | `Iter<T>` |
+| [`Iter#safeFrom(maybeIterable?)`](src/Iter.ts#L91) | Create an Iter from unknown input, returns empty Iter if not iterable | `Iter<T>` |
+| [`Iter#fromAsync(iterable)`](src/Iter.ts#L113) | Create an Iter from async iterable or promises | `Iter<T>` |
+| [`Iter#fromEntries(obj)`](src/Iter.ts#L136) | Create an Iter from object entries | `Iter<[K, V]>` |
+| [`Iter#safeFromEntries(obj?)`](src/Iter.ts#L150) | Create an Iter from object entries, returns empty Iter if null/undefined | `Iter<[K, V]>` |
+| [`Iter#fromRange(stop, start?, step?)`](src/Iter.ts#L170) | Create an Iter from a numeric range | `Iter<number>` |
+| [`Iter#gen(fn)`](src/Iter.ts#L184) | Create infinite Iter using generator function | `() => Iter<T>` |
+| [`Iter#zip(iterables, stopOnMin?)`](src/Iter.ts#L199) | Zip multiple iterables into tuples | `Iter<[...]>` |
+| [`Iter#search(obj, fn, skipAfterYield?)`](src/Iter.ts#L219) | Recursively search object for matching values | `Iter<KeyValuePair<U>>` |
 
 #### Chainable Methods
 
@@ -154,28 +156,28 @@ Returns a new `Iter<T>` instance for continued chaining.
 
 | Method | Description |
 |--------|-------------|
-| [`Iter#map(fn)`](src/Iter.ts#L115) | Transform each item |
-| [`Iter#filter(fn)`](src/Iter.ts#L119) | Filter items by predicate |
-| [`Iter#filterNullish()`](src/Iter.ts#L123) | Remove null and undefined values |
-| [`Iter#flat(depth?)`](src/Iter.ts#L109) | Flatten nested iterables |
-| [`Iter#flatMap(fn)`](src/Iter.ts#L105) | Map and flatten in one step |
-| [`Iter#pluck(key)`](src/Iter.ts#L152) | Extract property from each item |
-| [`Iter#tap(fn)`](src/Iter.ts#L139) | Run side effects without modifying items |
-| [`Iter#take(n)`](src/Iter.ts#L156) | Take first n items |
-| [`Iter#skip(n)`](src/Iter.ts#L164) | Skip first n items |
-| [`Iter#takeWhile(fn)`](src/Iter.ts#L168) | Take items while predicate is true |
-| [`Iter#skipWhile(fn)`](src/Iter.ts#L172) | Skip items while predicate is true |
-| [`Iter#until(fn)`](src/Iter.ts#L176) | Take items until predicate is true |
-| [`Iter#chunk(n)`](src/Iter.ts#L160) | Split into chunks of size n |
-| [`Iter#windows(size)`](src/Iter.ts#L180) | Create sliding windows of size n |
-| [`Iter#enumerate()`](src/Iter.ts#L131) | Add index to each item as [index, value] |
-| [`Iter#unique()`](src/Iter.ts#L127) | Remove duplicate values |
-| [`Iter#uniqueBy(fn)`](src/Iter.ts#L135) | Remove duplicates by selector function |
-| [`Iter#scan(fn, start?)`](src/Iter.ts#L143) | Like reduce but yields intermediate values |
-| [`Iter#repeat(times)`](src/Iter.ts#L289) | Repeat the iterable n times |
-| [`Iter#cycle()`](src/Iter.ts#L293) | Cycle through iterable infinitely |
-| [`Iter#apply(fn)`](src/Iter.ts#L184) | Apply a function to the iterable |
-| [`Iter#peekable()`](src/Iter.ts#L255) | Convert to PeekableIter |
+| [`Iter#flatMap(fn)`](src/Iter.ts#L242) | Map and flatten in one step |
+| [`Iter#flat(depth?)`](src/Iter.ts#L257) | Flatten nested iterables |
+| [`Iter#map(fn)`](src/Iter.ts#L273) | Transform each item |
+| [`Iter#filter(fn)`](src/Iter.ts#L287) | Filter items by predicate |
+| [`Iter#filterNullish()`](src/Iter.ts#L300) | Remove null and undefined values |
+| [`Iter#unique()`](src/Iter.ts#L313) | Remove duplicate values |
+| [`Iter#enumerate()`](src/Iter.ts#L329) | Add index to each item as [index, value] |
+| [`Iter#uniqueBy(fn)`](src/Iter.ts#L343) | Remove duplicates by selector function |
+| [`Iter#tap(fn)`](src/Iter.ts#L359) | Run side effects without modifying items |
+| [`Iter#scan(fn, start?)`](src/Iter.ts#L374) | Like reduce but yields intermediate values |
+| [`Iter#pluck(key)`](src/Iter.ts#L393) | Extract property from each item |
+| [`Iter#take(n)`](src/Iter.ts#L407) | Take first n items |
+| [`Iter#chunk(n)`](src/Iter.ts#L421) | Split into chunks of size n |
+| [`Iter#skip(n)`](src/Iter.ts#L435) | Skip first n items |
+| [`Iter#takeWhile(fn)`](src/Iter.ts#L449) | Take items while predicate is true |
+| [`Iter#skipWhile(fn)`](src/Iter.ts#L463) | Skip items while predicate is true |
+| [`Iter#until(fn)`](src/Iter.ts#L477) | Take items until predicate is true |
+| [`Iter#windows(size)`](src/Iter.ts#L492) | Create sliding windows of size n |
+| [`Iter#apply(fn)`](src/Iter.ts#L506) | Apply a function to the iterable |
+| [`Iter#peekable()`](src/Iter.ts#L753) | Convert to PeekableIter |
+| [`Iter#repeat(times)`](src/Iter.ts#L853) | Repeat the iterable n times |
+| [`Iter#cycle()`](src/Iter.ts#L866) | Cycle through iterable infinitely |
 
 #### Terminal Methods
 
@@ -183,29 +185,30 @@ Consumes the iterator and returns a final value.
 
 | Method | Description | Return Type |
 |--------|-------------|-------------|
-| [`Iter#toArray()`](src/Iter.ts#L297) | Collect all items into an array | `T[]` |
-| [`Iter#toSet()`](src/Iter.ts#L301) | Collect all items into a Set | `Set<T>` |
-| [`Iter#toMap()`](src/Iter.ts#L305) | Collect entries into a Map | `Map<K, V>` |
-| [`Iter#collect(collector?)`](src/Iter.ts#L283) | Collect using custom collector | `U` |
-| [`Iter#first()`](src/Iter.ts#L189) | Get the first item | `T` |
-| [`Iter#last()`](src/Iter.ts#L193) | Get the last item | `T \| undefined` |
-| [`Iter#find(fn)`](src/Iter.ts#L197) | Find first item matching predicate | `T \| null` |
-| [`Iter#findIndex(fn)`](src/Iter.ts#L201) | Find index of first match | `number` |
-| [`Iter#includes(value)`](src/Iter.ts#L205) | Check if value exists | `boolean` |
-| [`Iter#isEmpty()`](src/Iter.ts#L213) | Check if iterable is empty | `boolean` |
-| [`Iter#every(fn)`](src/Iter.ts#L221) | Test if all items match predicate | `boolean` |
-| [`Iter#some(fn)`](src/Iter.ts#L225) | Test if any item matches predicate | `boolean` |
-| [`Iter#count()`](src/Iter.ts#L209) | Count total items | `number` |
-| [`Iter#reduce(fn, start)`](src/Iter.ts#L217) | Reduce to single value | `U` |
-| [`Iter#join(delimiter?)`](src/Iter.ts#L243) | Join items into string | `string` |
-| [`Iter#sum()`](src/Iter.ts#L261) | Sum all numbers | `number` |
-| [`Iter#product()`](src/Iter.ts#L265) | Multiply all numbers | `number` |
-| [`Iter#average()`](src/Iter.ts#L269) | Average all numbers | `number` |
-| [`Iter#min()`](src/Iter.ts#L273) | Find minimum value | `T` |
-| [`Iter#max()`](src/Iter.ts#L277) | Find maximum value | `T` |
-| [`Iter#partition(fn)`](src/Iter.ts#L239) | Split into [passed, failed] arrays | `[T[], T[]]` |
-| [`Iter#groupBy(fn)`](src/Iter.ts#L247) | Group items by key | `Map<K, T[]>` |
-| [`Iter#unzip()`](src/Iter.ts#L229) | Transpose iterable of arrays | `UnzipOutput<T>` |
+| [`Iter#first()`](src/Iter.ts#L521) | Get the first item | `T` |
+| [`Iter#last()`](src/Iter.ts#L534) | Get the last item | `T \| undefined` |
+| [`Iter#find(fn)`](src/Iter.ts#L548) | Find first item matching predicate | `T \| null` |
+| [`Iter#findIndex(fn)`](src/Iter.ts#L562) | Find index of first match | `number` |
+| [`Iter#includes(value)`](src/Iter.ts#L577) | Check if value exists | `boolean` |
+| [`Iter#count()`](src/Iter.ts#L590) | Count total items | `number` |
+| [`Iter#isEmpty()`](src/Iter.ts#L603) | Check if iterable is empty | `boolean` |
+| [`Iter#forEach(fn)`](src/Iter.ts#L616) | Like Array.forEach but for Iter | `void` |
+| [`Iter#reduce(fn, start)`](src/Iter.ts#L634) | Reduce to single value | `U` |
+| [`Iter#every(fn)`](src/Iter.ts#L648) | Test if all items match predicate | `boolean` |
+| [`Iter#some(fn)`](src/Iter.ts#L662) | Test if any item matches predicate | `boolean` |
+| [`Iter#unzip()`](src/Iter.ts#L675) | Transpose iterable of arrays | `UnzipOutput<T>` |
+| [`Iter#partition(fn)`](src/Iter.ts#L692) | Split into [passed, failed] arrays | `[T[], T[]]` |
+| [`Iter#join(delimiter?)`](src/Iter.ts#L710) | Join items into string | `string` |
+| [`Iter#groupBy(fn)`](src/Iter.ts#L725) | Group items by key | `Map<K, T[]>` |
+| [`Iter#sum()`](src/Iter.ts#L768) | Sum all numbers | `number` |
+| [`Iter#product()`](src/Iter.ts#L781) | Multiply all numbers | `number` |
+| [`Iter#average()`](src/Iter.ts#L794) | Average all numbers | `number` |
+| [`Iter#min()`](src/Iter.ts#L807) | Find minimum value | `T` |
+| [`Iter#max()`](src/Iter.ts#L820) | Find maximum value | `T` |
+| [`Iter#collect(collector?)`](src/Iter.ts#L837) | Collect using custom collector | `U` |
+| [`Iter#toArray()`](src/Iter.ts#L879) | Collect all items into an array | `T[]` |
+| [`Iter#toSet()`](src/Iter.ts#L892) | Collect all items into a Set | `Set<T>` |
+| [`Iter#toMap()`](src/Iter.ts#L905) | Collect entries into a Map | `Map<K, V>` |
 
 ### `PeekableIter<T>`
 
