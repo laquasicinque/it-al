@@ -19,6 +19,7 @@ export { gen } from "./gen";
 export { includes } from "./includes";
 export { isEmpty } from "./isEmpty";
 export { isIterable, isNonStringIterable } from "./isIterable";
+export { isAsyncIterable } from "./isAsyncIterable";
 export { join } from "./join";
 export { last } from "./last";
 export { map } from "./map";
