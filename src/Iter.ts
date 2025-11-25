@@ -36,7 +36,7 @@ import { uniqueBy } from "./uniqueBy";
 import { until } from "./until";
 import { unzip, type UnzipOutput } from "./unzip";
 import { windows } from "./windows";
-import { zip, type ZipOutput } from "./zip";
+import { zip, type RecursiveZipOutput } from "./zip";
 import type {
   IterFn,
   MaybePromise,
@@ -199,7 +199,7 @@ export class Iter<T> implements Iterable<T> {
   static zip<const I extends Iterable<unknown>[]>(
     iter: I,
     stopOnMin?: boolean
-  ): ZipOutput<I> {
+  ): Iter<RecursiveZipOutput<I>> {
     return new Iter(zip(iter, stopOnMin));
   }
 

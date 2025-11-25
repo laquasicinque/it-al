@@ -6,7 +6,7 @@ export type ZipOutput<T extends readonly unknown[]> = Iterable<
   RecursiveZipOutput<T>
 >;
 
-type RecursiveZipOutput<
+export type RecursiveZipOutput<
   Input extends readonly unknown[],
   Output extends readonly unknown[] = [],
 > = Input extends []
