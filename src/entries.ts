@@ -1,6 +1,6 @@
 import { isIterable } from "./isIterable";
 
-type Entry<T> = { [K in keyof T & string]: [K, T[K]] }[keyof T & string];
+export type Entry<T> = { [K in keyof T & string]: [K, T[K]] }[keyof T & string];
 
 // Plain Objects are acceptable
 export function entries<T extends Partial<Record<PropertyKey, unknown>>>(

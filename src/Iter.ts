@@ -1,7 +1,7 @@
 import { average } from "./average";
 import { chunk } from "./chunk";
 import { count } from "./count";
-import { entries } from "./entries";
+import { entries, type Entry } from "./entries";
 import { enumerate } from "./enumerate";
 import { every } from "./every";
 import { filter } from "./filter";
@@ -43,9 +43,18 @@ import type {
   PeekableIter as PeekableIterType,
 } from "./_types";
 import { isAsyncIterable } from "./isAsyncIterable";
-import { PeekableIter } from "./index";
+import { isIterable, PeekableIter } from "./index";
 
 const _collectAsArray = <T>([...x]: Iterable<T>): T[] => x;
+
+type SafeEntriesOutput<T> =
+  T extends Record<PropertyKey, unknown>
+    ? Iter<Entry<T>>
+    : T extends Iterable<[infer K, infer V]>
+      ? Iter<[K, V]>
+      : T extends Record<"entries", () => Iterable<[infer K, infer V]>>
+        ? Iter<[K, V]>
+        : Iter<never>;
 
 /**
  * Class version of the iterable functions. Wraps iterable results in itself
@@ -67,6 +76,27 @@ export class Iter<T> implements Iterable<T> {
    */
   static from<T>(iterable: Iterable<T>) {
     return new Iter<T>(iterable);
+  }
+
+  /**
+   * Creates an iter from an unknown input. If the input is an iterable, then it is equivalent to Iter.from
+   * If it is not, then it returns an empty Iter instead.
+   * @returns A new Iter instance
+   * @example
+   * ```ts
+   * const iter = Iter.from(foo?.bar?.baz) // could error if input is null
+   * const safeIter = Iter.safeFrom(foo?.bar?.baz) //
+   * ```
+   */
+  static safeFrom<T>(
+    maybeIterable?: T
+  ): T extends Iterable<infer U> ? Iter<U> : Iter<never> {
+    if (isIterable(maybeIterable))
+      return new Iter(maybeIterable) as T extends Iterable<infer U>
+        ? Iter<U>
+        : Iter<never>;
+
+    return new Iter([]) as T extends Iterable<infer U> ? Iter<U> : Iter<never>;
   }
 
   /**
@@ -105,6 +135,23 @@ export class Iter<T> implements Iterable<T> {
    */
   static fromEntries(obj: Partial<Record<PropertyKey, unknown>>) {
     return new Iter(entries(obj));
+  }
+
+  /**
+   * Creates an Iter from object entries.
+   * @param obj - An object to get entries from
+   * @returns An Iter of key-value pairs
+   * @example
+   * ```ts
+   * const iter = Iter.fromEntries({ a: 1, b: 2, c: 3 });
+   * iter.toArray(); // [['a', 1], ['b', 2], ['c', 3]]
+   * ```
+   */
+  static safeFromEntries<T>(obj?: T): SafeEntriesOutput<T> {
+    if (obj == null) return new Iter([]) as SafeEntriesOutput<T>;
+    if (typeof obj === "object")
+      return new Iter(entries(obj)) as SafeEntriesOutput<T>;
+    return new Iter([]) as SafeEntriesOutput<T>;
   }
 
   /**
@@ -555,6 +602,17 @@ export class Iter<T> implements Iterable<T> {
    */
   isEmpty(): boolean {
     return isEmpty(this.#value);
+  }
+
+  /**
+   * Like Array.forEach but for Iter
+   * @param fn - A function to run on each item in the Iter
+   */
+  forEach(fn: (item: T, index: number) => void): void {
+    let i = 0;
+    for (const item of this) {
+      fn(item, i++);
+    }
   }
 
   /**
