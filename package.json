@@ -1,10 +1,13 @@
 {
   "name": "it-al",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "",
   "license": "ISC",
   "author": "",
   "type": "module",
+  "main": "dist/it-al.cjs",
+  "module": "dist/it-al.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
