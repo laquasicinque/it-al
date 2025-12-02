@@ -1,6 +1,6 @@
 import { isNonStringIterable } from "./isIterable";
 
-type FlattenOnce<T> = T extends Array<infer U> ? U : T;
+type FlattenOnce<T> = T extends Iterable<infer U> ? U : T;
 
 type Flatten<
   T,
@@ -12,7 +12,7 @@ type Flatten<
 
 export type FlatItem<Item, Depth extends number> = Depth extends 0
   ? Item
-  : Item extends Array<infer U>
+  : Item extends Iterable<infer U>
     ? Flatten<U, Depth>
     : Item;
 
