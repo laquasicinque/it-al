@@ -239,7 +239,7 @@ export class Iter<T> implements Iterable<T> {
    * // [1, 2, 2, 4, 3, 6]
    * ```
    */
-  flatMap<U>(fn: IterFn<T, U>) {
+  flatMap<U>(fn: IterFn<T, U>): Iter<FlatItem<U, 1>> {
     return this.map(fn).flat(1);
   }
 
@@ -254,7 +254,7 @@ export class Iter<T> implements Iterable<T> {
    * iter.flat(2).toArray(); // [1, 2, 3, 4, 5]
    * ```
    */
-  flat<Depth extends number = 1>(depth?: Depth) {
+  flat<Depth extends number = 1>(depth?: Depth): Iter<FlatItem<T, Depth>> {
     return new Iter(flat(this.#value as any, depth ?? 1)) as Iter<
       FlatItem<T, Depth>
     >;
