@@ -376,8 +376,8 @@ export class Iter<T> implements Iterable<T> {
   ): Iter<U> {
     const [fn, start] = args;
     return args.length === 2
-      ? new Iter(scan(this.#value, fn))
-      : new Iter(scan(this.#value, fn, start));
+      ? new Iter(scan(this.#value, fn, start))
+      : new Iter(scan(this.#value, fn));
   }
 
   /**
