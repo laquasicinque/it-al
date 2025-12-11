@@ -11,12 +11,14 @@ export type RecursiveZipOutput<
   Output extends readonly unknown[] = [],
 > = Input extends []
   ? Output
-  : TupleFirst<Input> extends infer K
-    ? RecursiveZipOutput<
-        TupleExcludingFirst<Input>,
-        [...Output, IterableItem<K>]
-      >
-    : never;
+  : Input extends [unknown, ...unknown[]]
+    ? TupleFirst<Input> extends infer K
+      ? RecursiveZipOutput<
+          TupleExcludingFirst<Input>,
+          [...Output, IterableItem<K>]
+        >
+      : never
+    : Input[number];
 
 type IterableItem<T> = T extends Iterable<infer Item> ? Item : never;
 
